@@ -1,4 +1,4 @@
-//find union and intersection of 2 unsorted arrays
+//find union and intersection of 2 unsorted arrays.array
 #include<iostream>
 using namespace std;
 
