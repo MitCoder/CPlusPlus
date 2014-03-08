@@ -1,4 +1,4 @@
-/*Binary search tree
+/*Binary search tree program
 1. Insert elements in a tree
 2. Find a specific element in tree
 3. Display all elements of tree
