@@ -1,4 +1,4 @@
-/*
+/* Queue Operation using linked list
 1. enqueue is a operation of insertion into queue
 2. dequeue is a operation of deletion from queue
 3. front is a operation which returns the first element in the queue ie head
