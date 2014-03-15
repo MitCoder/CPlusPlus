@@ -91,7 +91,7 @@ void linkedListClass::insertElement(int data, int position)
 
 }
 void linkedListClass::retrieveList(linkedListStruct* list)
-{
+{ 
 	while (list != NULL)
 	{
 		cout << list->data << endl;
@@ -109,6 +109,23 @@ void linkedListClass::retrieve()
 	{
 		cout << retrievePtr->data << endl;
 	}
+}
+void linkedListClass::middleLinkedList(linkedListStruct* list)
+{
+	linkedListStruct *fast = list;
+	linkedListStruct *slow = list;
+
+	if (list != NULL)
+	{
+		while (fast->Next != NULL && fast->Next->Next!=NULL)
+		{
+			slow = fast->Next;
+			fast = fast->Next->Next;
+		}
+		cout << "Middle element is : " << slow->data<<endl;
+
+	}
+
 }
 void linkedListClass::reverse(linkedListStruct* list)
 {
@@ -462,7 +479,86 @@ void linkedListClass::alternateSplit()
 	}
 
 }
+void linkedListClass::palindrome(linkedListStruct *list)
+{
+	//the middle of the linked list
+	linkedListStruct *fast = list;
+	linkedListStruct *slow = list;
+	linkedListStruct *prevSlow = NULL;
+	linkedListStruct *secondHalf = NULL;
+	linkedListStruct *midNode = NULL;
 
+
+	if (list != NULL)
+	{
+		while (fast != NULL && fast->Next != NULL)//logic to find the middle of the linked list
+		{
+			fast = fast->Next->Next;
+			prevSlow = slow;
+			slow = slow->Next;
+		}
+		if (fast != NULL)//fast pointer will be null if there are even elements
+		{
+			midNode = slow;
+			slow = slow->Next;
+		}
+
+		prevSlow->Next = NULL;
+		secondHalf = slow;
+		linkedListStruct * reverseList = reversePalindromeList(secondHalf);//reverse the second half of list
+		int compareResult=linkedListClass::compareList(list, reverseList);
+		linkedListStruct * secondHalfList = reversePalindromeList(reverseList);//the reverse list is made to original list as second half
+
+		if (midNode != NULL)
+		{
+			prevSlow->Next = midNode;
+			midNode->Next = secondHalfList;
+		}
+		else
+		{
+			prevSlow->Next = secondHalfList;
+		}
+		if (compareResult)
+			cout << "List is palindrome" << endl;
+		else
+			cout << "Not a palindrome" << endl;
+	}
+
+}
+int linkedListClass::compareList(linkedListStruct *firstList, linkedListStruct *reverseList)
+{
+	int flag = 0;
+	while (firstList != NULL & reverseList != NULL)
+	{
+		if (firstList->data == reverseList->data)
+		{
+			firstList = firstList->Next;
+			reverseList = reverseList->Next;
+		}
+		else
+			return 0;
+	}
+	if (firstList == NULL && reverseList == NULL)
+		return 1;
+	else 
+		return 0;
+}
+linkedListStruct * linkedListClass::reversePalindromeList(linkedListStruct *list)
+{
+	linkedListStruct *prev = NULL;
+	linkedListStruct *current = list;
+	linkedListStruct *next;
+	while (current != NULL)
+	{
+		next = current->Next;
+		current->Next = prev;
+		prev = current;
+		current = next;
+	}
+	list = prev;
+	
+	return list;
+}
 
 int main()
 {
@@ -493,6 +589,8 @@ int main()
 		cout << "15. MergeSort" << endl;
 		cout << "16. Reverse" << endl;
 		cout << "17. Delete linked list" << endl;
+		cout << "18. Middle of linked list" << endl;
+		cout << "19. Check if list is Palindrome" << endl;
 
 		cout << "20. Exit" << endl;
 
@@ -567,7 +665,13 @@ int main()
 			break;
 		case 17:
 			classPtr->deleteLinkedList(classPtr->Head);
-			break;		
+			break;	
+		case 18:
+			classPtr->middleLinkedList(classPtr->Head);
+			break;
+		case 19:
+			classPtr->palindrome(classPtr->Head);
+			break;
 
 			//	default: break;
 

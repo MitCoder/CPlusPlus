@@ -35,6 +35,10 @@ public:
 	void alternateSplit();
 	void shuffleMerge();
 	void deleteLinkedList(linkedListStruct* list);
+	void middleLinkedList(linkedListStruct* list);
+	void palindrome(linkedListStruct* list);
+	int compareList(linkedListStruct* list, linkedListStruct* reverseList);
+	linkedListStruct* reversePalindromeList(linkedListStruct* secondHalfList);
 	linkedListStruct* mergeSort(linkedListStruct* start, int size);
 	linkedListStruct* merge(linkedListStruct* first, linkedListStruct* second, int size1, int size2);
 
