@@ -1,3 +1,4 @@
+//binary search is done in for elements which are sorted in order in  O(logn)
 #include<iostream>
 using namespace std;
 
@@ -60,9 +61,6 @@ int binarySearch::search(int count, int findItem)
 	int mid, low, high;
 	high = count - 1;
 	low = 0;
-
-
-
 	while (low <= high)
 	{
 		mid = (low + high) / 2;
@@ -111,6 +109,6 @@ int main()
 		cout << findItem << "Found element in the list" << endl;
 	else
 		cout << findItem << "Not found" << endl;
-
+	cin.get();
 	return 0;
 }
