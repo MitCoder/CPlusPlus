@@ -1,93 +1,82 @@
-#include<stdio.h>
-#include<string.h>
-#include<stdlib.h>
-#include<iostream>;
-void computeLPSArray(char *pat, int M, int *lps);
+//kmp string pattern searching algorithm
+#include<iostream>
+using namespace std;
 
-void KMPSearch(char *pat, char *txt)
+void kmpAlgo(char *text, char *pattern);
+void compareTable(char *pattern, int patterlen,int *compTable);
+
+void kmpAlgo(char *text, char *pattern)
 {
-	//int patternLen = strlen(pat);
-	int N = strlen(txt);
-
-	// create lps[] that will hold the longest prefix suffix values for pattern
-	int patternLen = strlen(pat);
-//	int *lps = (int *)malloc(sizeof(int)*patternLen);
-	int *lps = new int[patternLen];
-	int j = 0;  // index for pat[]
-
-	// Preprocess the pattern (calculate lps[] array)
-	computeLPSArray(pat, patternLen, lps);
-
-	int i = 0;  // index for txt[]
-	while (i < N)
+	int textLen = strlen(text);
+	int patternLen = strlen(pattern);
+	//this table tracks the repeated char in pattern.
+	int *compTable = new int[patternLen];
+	int i = 0;
+	int j = 0;
+	int count = 0;
+	compareTable(pattern, patternLen,compTable);
+	
+	while (i < textLen)
 	{
-		if (pat[j] == txt[i])
+		if (pattern[j] == text[i])
 		{
-			j++;
 			i++;
+			j++;
 		}
-
 		if (j == patternLen)
 		{
-			printf("Found pattern at index %d \n", i - j);
-			j = lps[j - 1];
+			count++;
+			cout << "string found at " << i - j << " index" << endl;
 		}
-
-		// mismatch after j matches
-		else if (pat[j] != txt[i])
+		if (pattern[j] != text[i])
 		{
-			// Do not match lps[0..lps[j-1]] characters,
-			// they will match anyway
 			if (j != 0)
-				j = lps[j - 1];
+				j = compTable[j - 1];
 			else
-				i = i + 1;
+				i++;
+		
 		}
 	}
-	free(lps); // to avoid memory leak
+	cout << "Total # of occurances of pattern " << count << endl;
+
+	cin.get();
+
 }
-
-void computeLPSArray(char *pat, int patternLen, int *lps)
+void compareTable(char *pattern, int patternlen, int *compTable)
 {
-	int len = 0;  // lenght of the previous longest prefix suffix
-	int i;
+	int tableLen = 0;
+	compTable[tableLen] = 0;
+	int i = 1;
 
-	lps[0] = 0; // lps[0] is always 0
-	i = 1;
-
-	// the loop calculates lps[i] for i = 1 to M-1
-	while (i < patternLen)
-	{
-		if (pat[i] == pat[len])
+	while (i < patternlen)
+	{ //ABABCABAB
+		if (pattern[i] == pattern[tableLen])
 		{
-			len++;
-			lps[i] = len;
+			tableLen++;
+			compTable[i] = tableLen;
 			i++;
 		}
-		else // (pat[i] != pat[len])
+		else
 		{
-			if (len != 0)
+			if (tableLen != 0)
 			{
-				// This is tricky. Consider the example AAACAAAA and i = 7.
-				len = lps[len - 1];
-
-				// Also, note that we do not increment i here
+				tableLen = compTable[tableLen - 1];
 			}
-			else // if (len == 0)
+			else
 			{
-				lps[i] = 0;
+				compTable[i] = 0;
 				i++;
 			}
 		}
 	}
+	cin.get();
 }
 
-// Driver program to test above function
 int main()
 {
-	char *txt = "ABCAAABCD";
-	char *pat = "AAABC";
-	KMPSearch(pat, txt);
-	getchar();
+	char *text = "ABCBDABACDABABCABAB";
+	char *pattern = "ABC";
+	kmpAlgo(text, pattern);
 	return 0;
+
 }
