@@ -22,6 +22,7 @@
 21. Find the successor of a given node
 22. Find the next minmum node in a tree from the given node
 23. Check if bst is height balanced
+24. Count Number of Binary Search Tress given N Distinct Elements
 */
 #include<iostream>
 #include<queue>
@@ -74,6 +75,7 @@ public:
 	node *minNode(node *root);
 	void bstSuccessor(node *root, int findSuccVal);
 	int isBalanced(node *root, int *height);
+	int countBST(int number);
 	bst()
 	{
 		root = NULL;
@@ -110,9 +112,11 @@ int main()
 		cout << "19. Delete all nodes of BST" << endl;
 		cout << "20. Find a path whose sum is equal is a number" << endl;
 		cout << "21. Find successor in BST" << endl;
-		cout << "22. Check if BST is height balanced" << endl;
+		cout << "22. Find a minimum node to a given node" << endl;
+		cout << "23. Check if BST is height balanced" << endl;
+		cout << "24. Count # of BST for given N Distinct Elements" << endl;
 
-		cout << "24. Quit" << endl;
+		cout << "26. Quit" << endl;
 
 		cin >> option;
 		switch (option)
@@ -225,6 +229,17 @@ int main()
 			bstPtr.bstSuccessor(bstPtr.root,findSuccVal);
 			break;
 		case 22:
+				{int minNodeVal;
+				node *foundNode;
+				cout << "Enter the node to find its next minimum node" << endl;
+				cin >> minNodeVal;
+				foundNode=bstPtr.find(bstPtr.root, minNodeVal);
+
+				foundNode = bstPtr.minNode(foundNode);
+				cout << "Next minimum node is : " << foundNode->data << endl;
+				break;
+				}
+		case 23:
 			cout << "Check if BST is height balanced" << endl;
 			int heightBalanced,result;
 			heightBalanced = 0;
@@ -234,8 +249,16 @@ int main()
 			else
 				cout << "not balanced" <<result<< endl;
 			break;
+		case 24:
+			int number, countNo;
+			cout << "Enter number to count # of BST" << endl;
+			cin >> number;
+			countNo = bstPtr.countBST(number);
+			
+			cout << "Number of BST's : " << countNo << endl;
+			break;
 		
-		case 24:     exit(1);
+		case 26:     exit(1);
 
 		}
 	}
@@ -910,6 +933,25 @@ node *  bst::minNode(node *bstTree)
 	}
 	return curr;
 }
+int  bst::countBST(int number)
+{
+	
+	if (number == 0 || number == 1)
+		return 1;
+	else
+	{
+		int sum = 0;
+		int left=0, right=0;
+		for (int i = 1; i <= number; i++)
+		{
+			left = countBST(i - 1);
+			right = countBST(number - i);
+			sum += left*right;
+		}
+		return sum;
+	}
+}
+
 /*static int topLevel=-1;//so that the value can be accessed even if you exist a function
 if(flag)
 topLevel=-1;
