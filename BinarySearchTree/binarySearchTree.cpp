@@ -1,4 +1,4 @@
-/*Binary search tree program
+/*Binary search tree
 1. Insert elements in a tree
 2. Find a specific element in tree
 3. Display all elements of tree
@@ -20,7 +20,8 @@
 19. Delete all  nodes of BST
 20. Find a path whose sum is equal is a number
 21. Find the successor of a given node
-22.Find the next minmum node in a tree from the given node
+22. Find the next minmum node in a tree from the given node
+23. Check if bst is height balanced
 */
 #include<iostream>
 #include<queue>
@@ -72,6 +73,7 @@ public:
 	void deleteAllBST(node * root);
 	node *minNode(node *root);
 	void bstSuccessor(node *root, int findSuccVal);
+	int isBalanced(node *root, int *height);
 	bst()
 	{
 		root = NULL;
@@ -108,6 +110,8 @@ int main()
 		cout << "19. Delete all nodes of BST" << endl;
 		cout << "20. Find a path whose sum is equal is a number" << endl;
 		cout << "21. Find successor in BST" << endl;
+		cout << "22. Check if BST is height balanced" << endl;
+
 		cout << "24. Quit" << endl;
 
 		cin >> option;
@@ -219,6 +223,16 @@ int main()
 			cout << "Enter the node to find its successor" << endl;
 			cin >> findSuccVal;
 			bstPtr.bstSuccessor(bstPtr.root,findSuccVal);
+			break;
+		case 22:
+			cout << "Check if BST is height balanced" << endl;
+			int heightBalanced,result;
+			heightBalanced = 0;
+			result=bstPtr.isBalanced(bstPtr.root, &heightBalanced);
+			if (result)
+				cout << "balanced" <<result<< endl;
+			else
+				cout << "not balanced" <<result<< endl;
 			break;
 		
 		case 24:     exit(1);
@@ -786,20 +800,42 @@ int  bst::heightBST(node *bstTree)
 
 //	return 1 + max(heightBST(bstTree->left), heightBST(bstTree->right));
 }
-
 int  bst::diameter(node *bstTree)
 {
 	if (bstTree == NULL)
 		return 0;
+	else
+	{
+		int lheight = heightBST(bstTree->left);
+		int rheight = heightBST(bstTree->right);
+
+		int ldiameter = diameter(bstTree->left);
+		int rdiameter = diameter(bstTree->right);
+
+		return max(lheight + rheight + 1, ldiameter + rdiameter);
+	}
+}
+int  bst::isBalanced(node *bstTree, int *height)
+{
+	if (bstTree == NULL)
+	{
+		*height = 0;
+		return 1;
+	}
+	/* lh --> Height of left subtree
+	rh --> Height of right subtree */
+	int lh = 0, rh = 0;
+	int leftHt = isBalanced(bstTree->left,&lh);
+	int rightHt = isBalanced(bstTree->right,&rh);
+
+	*height = (lh > rh ? lh : rh) + 1;
+		
+	if ((lh - rh >= 2) || (rh - lh >= 2))
+		return 0;//not balanced ie false
+	else
+		return leftHt&&rightHt;//balanced
 
 
-	int lheight = heightBST(bstTree->left);
-	int rheight = heightBST(bstTree->right);
-	
-	int ldiameter = diameter(bstTree->left);
-	int rdiameter = diameter(bstTree->right);
-
-	return max(lheight + rheight + 1, ldiameter + rdiameter);
 }
 void  bst::deleteAllBST(node *bstTree)
 {
