@@ -4,20 +4,28 @@
 using namespace std;
 int main()
 {
-	char *str1="";
-	char *str2 = "";
-	cin>>str1;
-	cin >> str2;
+	string string1, string2;
+
+	getline(cin, string1);
+	getline(cin, string2);
+
+	char *str1 = new char[string1.size() + 1];
+	char *str2 = new  char[string2.size() + 1];
+
+	strcpy(str1,string1.c_str());
+	strcpy(str2, string2.c_str());//c_str gives const char*. This step is used to convert convert const char * to char*
+	//or other way can be 	char *strPtr = (char*)str.c_str();
 
 	int i, j;
 	int n1 = strlen(str1);
 	int n2 = strlen(str2);
 	int c = 0;
-	char *nextToken = NULL;
-	char *str1Tok=strtok_s(str1," ",&nextToken);
-	cout << "--" << str1Tok;
+	//char *nextToken = "";
+	//char *str1Tok=strtok_s(str1," ",&nextToken);
+	//cout << "--" << str1Tok;
+
 	if (n1 != n2)
-	{
+	{ //base condition
 		cout << "\nThey are not anagrams------------------------- ! ";
 		cin.get();
 
@@ -47,5 +55,6 @@ int main()
 	else
 		cout << "no ! ";
 	system("pause");
+	
 	return 0;
 }
