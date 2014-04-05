@@ -136,6 +136,7 @@ int main()
 				cout << "Enter which element to find" << endl;
 				cin >> findElement;
 				node * findElementNode = bstPtr.find(bstPtr.root, findElement);
+				if (findElementNode!=NULL)
 				cout << "Item found " << findElementNode->data << endl;
 				break;
 				}
@@ -425,6 +426,25 @@ node* bst::find(node *temp, int item)
 			ptr = ptr->left;
 		}
 	}
+  /* can also be done this way	
+    if (temp != NULL)
+	{
+		if (temp->data == item)
+		{
+			cout << "item found----" << item << endl;
+			return temp;
+		}
+		else if (temp->data > item)
+			find(temp->left, item);
+		else if (temp->data < item)
+			find(temp->right, item);
+		
+	}
+	else
+	{
+	   cout << "item not found" << endl;
+		return NULL;
+	}*/
 }
 void bst::deleteNode(int item)
 {
@@ -562,7 +582,7 @@ void bst::preOrder(node *ptr)//VLR
 	}
 
 }
-void bst::inOrder(node *ptr)//LVR
+void bst::inOrder(node *ptr)//LVR..it displays the bst in sorted order
 {
 	if (root == NULL)
 	{
@@ -690,9 +710,29 @@ int  bst::nodedistRoot(node *bstTree, int level, int finditem)
 {
 	int leftVal = 0;
 	int rightVal = 0;
-	static int leafLevel = 0;
+	 int leafLevel = 0;
+	while (bstTree != NULL)
+	{
 
-	if (bstTree->left != NULL || bstTree->right != NULL)
+		if (bstTree->data > finditem)
+		{
+			bstTree = bstTree->left;
+			leafLevel++;
+		}
+		else
+		{
+			bstTree = bstTree->right;
+			leafLevel++;
+
+		}
+		if (bstTree->data == finditem )
+		{
+			return leafLevel;
+		}
+	}
+
+	/* this is wrong hence commented 
+    if (bstTree->left != NULL || bstTree->right != NULL)
 	{
 		if (bstTree->left->data == finditem || bstTree->right->data == finditem)
 		{
@@ -701,6 +741,7 @@ int  bst::nodedistRoot(node *bstTree, int level, int finditem)
 
 		}
 	}
+	
 	if (bstTree->left)
 		leftVal = maxdistRoot(bstTree->left, level + 1);
 	if (bstTree->right)
@@ -710,7 +751,7 @@ int  bst::nodedistRoot(node *bstTree, int level, int finditem)
 		return leftVal;
 	else
 		return rightVal;
-	
+	*/
 }
 void bst::bstToDLL (node *bstTree)
 {
