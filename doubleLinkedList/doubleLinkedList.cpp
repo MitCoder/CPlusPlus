@@ -1,10 +1,11 @@
 /*
 Doubly linked list
-1.Insert
-2.Reverse Print
-3.Print
-4.Delete a node
-5.Count
+1. Insert
+2. Print data
+3. Print in reverse
+4. Count
+5. Delete a node
+6. Reverse list
 */
 #include<iostream>
 #include "doubleLinkedList.h"
@@ -72,21 +73,25 @@ void doubleLinkedList::deleteNode(int delData)
 		
 		if (temp->data == delData)
 		{
-			if (temp == head)
+			if (temp == head)//if delData is the first ie head node to  delete 
 			{
 				delptr = temp;
 				temp->next->prev = NULL;
 				head = temp->next;
 			}
-			else
+			if (temp->next!=NULL)//if delData is the not the last and first node to  delete 
 			{
 				delptr = temp;
 				temp->prev->next = temp->next;
-				temp->next = temp->prev;
+				temp->next->prev = temp->prev;
+			}
+			if (temp->prev != NULL)//if delData is the last node to  delete 
+			{
+				delptr = temp;
+				temp->prev->next = temp->next;
 			}
 		}
 		
-
 
 	}
 	delete delptr;
