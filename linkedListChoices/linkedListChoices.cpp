@@ -71,19 +71,25 @@ void linkedListClass::insertElement(int data, int position)
 {
 	linkedListStruct *newElement = new linkedListStruct;
 	linkedListStruct *curr = new linkedListStruct;
+	linkedListStruct *prev = new linkedListStruct;
 
 	newElement->data = data;
 	int count = 0;
 	for (curr = Head; curr != NULL; curr = curr->Next)
 	{
+		cout << prev->data << curr->data << endl;
 		if (count == position)
 		{
+			/*newElement->Next = curr;
+			prev->Next = newElement;
+			return; //other way*/
 			newElement->Next = curr->Next;
 			curr->Next = newElement;
 			return;
 		}
 		else
 		{
+			prev = curr;
 			count++;
 		}
 
@@ -167,7 +173,7 @@ void linkedListClass::insertSort()
 	}
 	//	cout<<Head->data;
 }
-
+//mergesort time complexity worst case is O(nlogn).Space complexity is O(n)ie space is proportional to no. of elements.
 linkedListStruct* linkedListClass::mergeSort(linkedListStruct* start, int size)
 {
 	int mid;
@@ -246,7 +252,7 @@ void linkedListClass::sortList()
 		flag = false;
 		for (curr = Head; curr->Next != NULL; curr = curr->Next)
 		{
-			temp = curr;
+			//temp = curr;
 
 			if (curr->data > curr->Next->data)
 			{
@@ -256,6 +262,12 @@ void linkedListClass::sortList()
 					temp->Next = curr->Next;
 					curr->Next = temp;
 					Head = curr;
+
+				/*	temp = curr->Next;//can also be done this way
+					curr->Next = temp->Next;
+					temp->Next = curr;
+					curr = temp;
+					Head = curr;*/
 				}
 				else
 				{
@@ -327,7 +339,7 @@ int linkedListClass::count(linkedListStruct* list)
 	return count;
 }
 void linkedListClass::showDuplicate()
-{
+{//O(n^2)
 	linkedListStruct *iPtr = new linkedListStruct;
 	linkedListStruct *jPtr = new linkedListStruct;
 
@@ -349,12 +361,10 @@ void linkedListClass::showDuplicate()
 }
 
 void linkedListClass::removeDuplicate()
-{
-	linkedListStruct *iPtr = new linkedListStruct;
+{	linkedListStruct *iPtr = new linkedListStruct;
 	linkedListStruct *jPtr = new linkedListStruct;
 	linkedListStruct *kPtr = new linkedListStruct;
 	linkedListStruct *oldPtr = new linkedListStruct;
-
 	for (iPtr = Head; iPtr != NULL; iPtr = iPtr->Next)
 	{
 		kPtr = iPtr;
@@ -374,7 +384,25 @@ void linkedListClass::removeDuplicate()
 			}
 		}
 	}
+/*	removing duplicates from sorted list Time complexity is O(n)
+//if the list is unsorted,use merge sort to sort the list O(nlogn) and then remove duplicates.Quicksort can also be used but for worst case it is O(n^2)
 
+iPtr = Head;
+
+   while (iPtr->Next != NULL)
+	{
+		if (iPtr->data == iPtr->Next->data)
+		{
+			oldPtr = iPtr->Next;
+			iPtr->Next = iPtr->Next->Next;
+			delete(oldPtr);
+		}
+		else
+		{
+			iPtr = iPtr->Next;
+		}
+	}
+	*/
 }
 void linkedListClass::deleteLinkedList(linkedListStruct *list)
 {
@@ -466,6 +494,10 @@ void linkedListClass::alternateSplit()
 
 		split2->Next = split2->Next->Next;
 		split2 = split2->Next;
+	/*	split1->Next = split2->Next;
+		split1 = split1->Next;
+		split2->Next = split1->Next;
+		split2 = split2->Next;*/
 
 	}
 	split1->Next = NULL;
@@ -502,7 +534,7 @@ void linkedListClass::palindrome(linkedListStruct *list)
 			midNode = slow;
 			slow = slow->Next;
 		}
-
+		//middle is found, separate the LHS and RHS
 		prevSlow->Next = NULL;
 		secondHalf = slow;
 		linkedListStruct * reverseList = reversePalindromeList(secondHalf);//reverse the second half of list
