@@ -319,7 +319,7 @@ void bst::printPossiblePaths(node *temp, int path[], int len)
 	len++;
 
 
-	if (tempPtr->left == NULL && tempPtr->left == NULL)
+	if (tempPtr->left == NULL && tempPtr->right == NULL)
 	{
 		for (int i = 0; i<len; i++)
 		{
