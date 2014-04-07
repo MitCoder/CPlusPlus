@@ -70,7 +70,6 @@ void removeLoop(node *slow, node *head)
 	for (int i = 0; i <= count;i++)
 	{
 		ptr2 = ptr2->next;
-	
 	}
 	//place both the pointers in the same location.
 	while (ptr2 != ptr1)
@@ -85,16 +84,32 @@ void removeLoop(node *slow, node *head)
 		ptr2 = ptr2->next;
 	}
 	ptr2->next = NULL;
+	
+/*	//below code also works
+    node *fast = head;
+	while (fast->next != slow->next)
+	{
+		fast = fast->next;
+		slow = slow->next;
+	}
+	node *start = fast->next;
+	fast = start;
+	while (fast->next != start)
+	{
+		fast = fast->next;
+	}
+	fast->next = NULL;
+	*/
 }
 int main()
 {
 	node *list = new node;
+	insert(list, 10);
 	insert(list, 4);
-	insert(list, 2);
-	insert(list, 6);
-	insert(list, 8);
-	insert(list, 9);
-	head->next->next->next->next->next = head->next;
+	insert(list, 15);
+	insert(list, 20);
+	insert(list, 50);
+	head->next->next->next->next->next = head->next->next;
 	detectLoop(head);
 	printlist(head);
 
