@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 using namespace std;
 
 struct node
@@ -55,7 +55,7 @@ void detectLoop(node *list)
 }
 void removeLoop(node *slow, node *head)
 {
-	node *ptr1=slow;
+/*	node *ptr1=slow;
 	node *ptr2=slow;
 	int count=0;
 	//how many items are there in loop
@@ -84,14 +84,23 @@ void removeLoop(node *slow, node *head)
 		ptr2 = ptr2->next;
 	}
 	ptr2->next = NULL;
-	
-/*	//below code also works
+	*/
+	//below code also works
     node *fast = head;
 	while (fast->next != slow->next)
 	{
 		fast = fast->next;
 		slow = slow->next;
 	}
+	//get the start of the loop
+	/*
+	 50--->20---->15---->4---->10
+                  ▲            |
+                  |            ▼
+                  --------------   
+	 15 is start of the list.
+	 Once you know where the loop starts, it's easy to identify the last element in the list,
+	 since it's the element in the list following the start of the loop that ends up pointing back to the start of the loop.*/
 	node *start = fast->next;
 	fast = start;
 	while (fast->next != start)
@@ -99,7 +108,7 @@ void removeLoop(node *slow, node *head)
 		fast = fast->next;
 	}
 	fast->next = NULL;
-	*/
+	
 }
 int main()
 {
