@@ -20,6 +20,7 @@ public:
 	void insertSecond(int data);
 	void appendList();
 	void intersectionList();
+	void intersectionListComp();
 
 	void  retrieve();
 	void  retrieveList(linkedListStruct* list);
@@ -43,8 +44,6 @@ public:
 	linkedListStruct* merge(linkedListStruct* first, linkedListStruct* second, int size1, int size2);
 
 	//void insertSecond(int data);
-
-
 private:
 	int size;
 
