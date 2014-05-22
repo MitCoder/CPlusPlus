@@ -120,15 +120,26 @@ void linkedListClass::insertElement(int data, int position)
 	int count = 0;
 	for (curr = Head; curr != NULL; curr = curr->Next)
 	{
-		cout << prev->data << curr->data << endl;
 		if (count == position)
 		{
 			/*newElement->Next = curr;
 			prev->Next = newElement;
 			return; //other way*/
-			newElement->Next = curr->Next;
-			curr->Next = newElement;
-			return;
+			
+			if (curr == Head)
+			{
+				newElement->Next = curr;
+				curr = newElement;
+				Head = curr;		
+				return;
+			}
+			else
+			{
+				newElement->Next = curr;
+				prev->Next=newElement;
+				curr = newElement;
+				return;
+			}
 		}
 		else
 		{
