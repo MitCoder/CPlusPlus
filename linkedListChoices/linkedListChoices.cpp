@@ -36,12 +36,12 @@ void linkedListClass::appendList()
 	currSec = NULL;
 
 }
-
+//time complexity is O(m*n)
 void linkedListClass::intersectionList()
 {
 	linkedListStruct *first = new linkedListStruct;
 	linkedListStruct *second = new linkedListStruct;
-	linkedListStruct *result = new linkedListStruct;
+	linkedListStruct *result1 = new linkedListStruct;
 
 
 	for (first = Head; first != NULL; first = first->Next)
@@ -51,22 +51,65 @@ void linkedListClass::intersectionList()
 
 			if (first->data == second->data)
 			{
+				linkedListStruct *result = new linkedListStruct;
 				result->data = first->data;
 				result->Next = Head3;
 				Head3 = result;
+				cout << "head"<<Head3->data << endl;
 			}
 		}
 
 	}
 	cout << "Intersection results are" << endl;
-	for (result = Head3; result != NULL; result = result->Next)
+	for (result1 = Head3; result1 != NULL; result1 = result1->Next)
 	{
 
-		cout << result->data;
+		cout <<"inster"<< result1->data<<endl;
 	}
 
 }
+//time complexity O(m+n)
+void linkedListClass::intersectionListComp()
+{
+	linkedListStruct *first = new linkedListStruct;
+	linkedListStruct *second = new linkedListStruct;
+	first = Head;
+	second = Head2;
 
+	int firstCount = linkedListClass::count(Head);
+	int secondCount = linkedListClass::count(Head2);
+	int differenceVal;
+	if (firstCount > secondCount)
+	{
+		differenceVal = firstCount - secondCount;
+		cout <<"difference "<< differenceVal<<endl;
+	}
+	else
+	{
+		differenceVal = secondCount - firstCount;
+		cout << differenceVal;
+
+	}
+
+	for (int i = 0; i < differenceVal; i++)
+	{
+		if (first != NULL)
+			first = first->Next;
+	}
+
+	while (first != NULL && second != NULL)
+	{
+		cout << first->data<<"while" << second->data<<endl;
+		if (first->data == second->data)
+		{
+			cout << "intersect" << first->data << endl;
+			break;
+		}
+		first = first->Next;
+		second = second->Next;
+	}
+
+}
 void linkedListClass::insertElement(int data, int position)
 {
 	linkedListStruct *newElement = new linkedListStruct;
@@ -529,7 +572,7 @@ void linkedListClass::palindrome(linkedListStruct *list)
 			prevSlow = slow;
 			slow = slow->Next;
 		}
-		if (fast != NULL)//fast pointer will be null if there are even elements
+		if (fast != NULL)//fast pointer will be null if there are even elements.This logic can also be used to find if there are even or odd elements
 		{
 			midNode = slow;
 			slow = slow->Next;
@@ -538,7 +581,7 @@ void linkedListClass::palindrome(linkedListStruct *list)
 		prevSlow->Next = NULL;
 		secondHalf = slow;
 		linkedListStruct * reverseList = reversePalindromeList(secondHalf);//reverse the second half of list
-		int compareResult=linkedListClass::compareList(list, reverseList);
+		int compareResult = linkedListClass::compareList(list, reverseList);
 		linkedListStruct * secondHalfList = reversePalindromeList(reverseList);//the reverse list is made to original list as second half
 
 		if (midNode != NULL)
@@ -616,15 +659,17 @@ int main()
 		cout << "10. Insert in Second List" << endl;
 		cout << "11. Append List" << endl;
 		cout << "12. Intersection List" << endl;
-		cout << "13. Alternate Split" << endl;
-		cout << "14. Shuffle Merge" << endl;
-		cout << "15. MergeSort" << endl;
-		cout << "16. Reverse" << endl;
-		cout << "17. Delete linked list" << endl;
-		cout << "18. Middle of linked list" << endl;
-		cout << "19. Check if list is Palindrome" << endl;
+		cout << "13. Intersection List better complexity" << endl;
 
-		cout << "20. Exit" << endl;
+		cout << "14. Alternate Split" << endl;
+		cout << "15. Shuffle Merge" << endl;
+		cout << "16. Reverse" << endl;
+		cout << "17. Merge Sort" << endl;
+		cout << "18. Delete linked list" << endl;
+		cout << "19. Middle of linked list" << endl;
+		cout << "20. Check if list is Palindrome" << endl;
+
+		cout << "21. Exit" << endl;
 
 		cin >> option;
 		switch (option)
@@ -672,16 +717,19 @@ int main()
 		case 12:  cout << "Intersection linked list" << endl;
 			classPtr->intersectionList();
 			break;
-		case 13:  cout << "Alternating split" << endl;
+		case 13:  cout << "Intersection linked list better complexity" << endl;
+			classPtr->intersectionListComp();
+			break;
+		case 14:  cout << "Alternating split" << endl;
 			classPtr->alternateSplit();
 			break;
-		case 14:  cout << "Shuffle Merge" << endl;
+		case 15:  cout << "Shuffle Merge" << endl;
 			classPtr->shuffleMerge();
 			break;
-		case 15:
+		case 16:
 			classPtr->reverse(classPtr->Head);
 			break;
-		case 16:  cout << "Merge Sort" << endl;
+		case 17:  cout << "Merge Sort" << endl;
 			int listSize, count;
 			listSize = classPtr->count(classPtr->Head);
 			newhead = classPtr->mergeSort(classPtr->Head, listSize);
@@ -695,13 +743,13 @@ int main()
 			temp->Next = NULL;
 			classPtr->retrieveList(newhead);
 			break;
-		case 17:
+		case 18:
 			classPtr->deleteLinkedList(classPtr->Head);
 			break;	
-		case 18:
+		case 19:
 			classPtr->middleLinkedList(classPtr->Head);
 			break;
-		case 19:
+		case 20:
 			classPtr->palindrome(classPtr->Head);
 			break;
 
@@ -709,6 +757,6 @@ int main()
 
 		}
 
-	} while (option != 20);
+	} while (option != 21);
 	return 0;
 }
