@@ -88,7 +88,6 @@ void linkedListClass::intersectionListComp()
 	{
 		differenceVal = secondCount - firstCount;
 		cout << differenceVal;
-
 	}
 
 	for (int i = 0; i < differenceVal; i++)
@@ -506,16 +505,23 @@ void linkedListClass::shuffleMerge()
 		temp2->Next = list1;
 		}
 		*/
-		temp1 = list1;
-		list1 = list1->Next;
-		temp1->Next = list2;
-		list2 = list2->Next;
-		temp1 = temp1->Next;
-		if (temp1->Next != NULL)
-		{
-			temp1->Next = list1;
+		
+		temp1 = list1->Next;
+		list1->Next = list2;
 
+		list2 = list2->Next;
+		list1 = list1->Next;
+		list1->Next = temp1;
+		list1 = list1->Next;
+		if (list1->Next == NULL)
+		{
+			list1->Next = list2;
+			//list2 = list2->Next;
+			break;
 		}
+
+
+
 
 	}
 
@@ -671,7 +677,6 @@ int main()
 		cout << "11. Append List" << endl;
 		cout << "12. Intersection List" << endl;
 		cout << "13. Intersection List better complexity" << endl;
-
 		cout << "14. Alternate Split" << endl;
 		cout << "15. Shuffle Merge" << endl;
 		cout << "16. Reverse" << endl;
