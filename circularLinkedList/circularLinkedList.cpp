@@ -25,7 +25,7 @@ void circularClass::insert(int data)
 		while (ptr->next != head->next)
 		{
 			ptr = ptr->next;
-			cout << ptr->data << "fff" << ptr->next->data;
+			cout << ptr->data << "fff" << ptr->next->data<<endl;
 		}
 		ptr->next = head;
 	}
@@ -34,11 +34,12 @@ void circularClass::deleteNode(int delNode)
 {
 	circularStruct *delPtr = new circularStruct;
 	circularStruct *prevPtr = new circularStruct;
-
+	delPtr = head->next;
 	prevPtr = head;
+	/*prevPtr = head;//this code will delete the del data in the circular list, but it will be an infinite loop if the del data isnt present in loop.
 	delPtr = head->next;
 
-	while (delPtr->data != delNode)
+	while (delPtr->data != delNode )
 	{
 		delPtr = delPtr->next;
 		prevPtr = prevPtr->next;
@@ -52,7 +53,31 @@ void circularClass::deleteNode(int delNode)
 		prevPtr->next = delPtr->next;
 		head = delPtr->next;
 	}
-	delete delPtr;
+	delete delPtr;*/
+	//the below code will exist out of loop if no del data is found in circular list
+	while (delPtr != head)
+	{
+		if (delPtr->data == delNode)
+		break;
+		prevPtr = prevPtr->next;
+		delPtr = delPtr->next;
+
+	}
+	if (delPtr != head)
+	{
+		prevPtr->next = delPtr->next;
+		delete delPtr;
+	}
+	if (delPtr == head && delPtr->data == delNode)
+	{
+		cout << delPtr->data << prevPtr->data;
+		prevPtr->next = delPtr->next;
+		head = delPtr->next;
+		delete delPtr;
+
+	}
+
+
 }
 void circularClass::retrieve()
 {
