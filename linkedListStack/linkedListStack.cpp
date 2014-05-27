@@ -1,8 +1,8 @@
 /*
-1. enqueue is a operation of insertion into queue
-2. dequeue is a operation of deletion from queue
-3. front is a operation which returns the first element in the queue ie head
-4. peek is a operation which returns the last element in the queue ie tail
+1. push is a operation of insertion into stack
+2. pop is a operation of deletion from top of stack
+3. front is a operation which returns the top element in the stack ie head
+4. peek is a operation which returns the last element in the stack ie tail
 the timecomplexity should be a constant time ie O(1)
 */
 #include<iostream>
@@ -83,13 +83,13 @@ void stackLinkedList::printStack()
 	{
 		node *printPtr = new node;
 		printPtr = head;
-
+		cout << "Printing stack data" << endl;
 		while (printPtr != NULL)
 		{
 			cout << printPtr->data << "  ";
 			printPtr = printPtr->next;
 		}
-
+		cout << endl;
 	}
 
 }
@@ -106,14 +106,14 @@ int main()
 		cout << "2. Find top of the element in stack" << endl;
 		cout << "3. Find bottom of the element in stack" << endl;
 		cout << "4. Delete element in the stack" << endl;
-		cout << "5. Print queue" << endl;
+		cout << "5. Print stack" << endl;
 		cout << "7. exit" << endl;
 
 		cin >> option;
 		switch (option)
 		{
 		case 1: int data;
-			cout << "Enter data in queue" << endl;
+			cout << "Enter data in stack" << endl;
 			cin >> data;
 			classPtr->insert(data);
 			break;
