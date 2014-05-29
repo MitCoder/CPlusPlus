@@ -20,9 +20,10 @@
 19. Delete all  nodes of BST
 20. Find a path whose sum is equal is a number
 21. Find the successor of a given node
-22. Find the next minmum node in a tree from the given node
-23. Check if bst is height balanced
-24. Count Number of Binary Search Tress given N Distinct Elements
+22. Find the nearest ceiling for a given number
+23. Find the next minmum node in a tree from the given node
+24. Check if bst is height balanced
+25. Count Number of Binary Search Tress given N Distinct Elements
 */
 #include<iostream>
 #include<queue>
@@ -75,6 +76,8 @@ public:
 	void deleteAllBST(node * root);
 	node *minNode(node *root);
 	void bstSuccessor(node *root, int findSuccVal);
+	void inorderSuccessor(int *flag, struct node *root, int key, node *parent);
+	void ceilNode(node *root, int num,int foundVal);
 	int isBalanced(node *root, int *height);
 	int countBST(int number);
 	bst()
@@ -113,9 +116,10 @@ int main()
 		cout << "19. Delete all nodes of BST" << endl;
 		cout << "20. Find a path whose sum is equal is a number" << endl;
 		cout << "21. Find successor in BST" << endl;
-		cout << "22. Find a minimum node to a given node" << endl;
-		cout << "23. Check if BST is height balanced" << endl;
-		cout << "24. Count # of BST for given N Distinct Elements" << endl;
+	    cout << "22. Find the nearest ceiling for a given number" << endl;
+		cout << "23. Find a minimum node to a given node" << endl;
+		cout << "24. Check if BST is height balanced" << endl;
+		cout << "25. Count # of BST for given N Distinct Elements" << endl;
 
 		cout << "26. Quit" << endl;
 
@@ -231,12 +235,27 @@ int main()
 				bstPtr.hasPathSum(bstPtr.root, sumVal,0);
 				break;
 		case 21:
-			int findSuccVal;
-			cout << "Enter the node to find its successor" << endl;
-			cin >> findSuccVal;
-			bstPtr.bstSuccessor(bstPtr.root,findSuccVal);
-			break;
+				{int findSuccVal;
+				int succFlag = 0;
+				node *parent = new node;
+		
+
+				cout << "Enter the node to find its successor" << endl;
+				cin >> findSuccVal;
+				//	bstPtr.bstSuccessor(bstPtr.root,findSuccVal);
+				bstPtr.inorderSuccessor(&succFlag, bstPtr.root, findSuccVal,parent);
+				break; }
 		case 22:
+				{
+					int ceilNum;
+					int foundVal = 0;
+					cout << "Enter the ceiling for a number" << endl;
+					cin >> ceilNum;
+		
+					bstPtr.ceilNode(bstPtr.root, ceilNum, foundVal);
+					break; 
+		       }
+		case 23:
 				{int minNodeVal;
 				node *foundNode;
 				cout << "Enter the node to find its next minimum node" << endl;
@@ -247,7 +266,7 @@ int main()
 				cout << "Next minimum node is : " << foundNode->data << endl;
 				break;
 				}
-		case 23:
+		case 24:
 			cout << "Check if BST is height balanced" << endl;
 			int heightBalanced,result;
 			heightBalanced = 0;
@@ -257,7 +276,7 @@ int main()
 			else
 				cout << "not balanced" <<result<< endl;
 			break;
-		case 24:
+		case 25:
 			int number, countNo;
 			cout << "Enter number to count # of BST" << endl;
 			cin >> number;
@@ -592,7 +611,7 @@ void bst::preOrder(node *ptr)//VLR
 	}
 
 }
-void bst::inOrder(node *ptr)//LVR..it displays the bst in sorted order
+void bst::inOrder(node *ptr)//LVR..it displays the bst in sorted order.O(n) n=#of nodes because we visit each nodes exactly once, so time taken is porportional to number of nodes in tree.
 {
 	if (root == NULL)
 	{
@@ -720,7 +739,6 @@ int  bst::maxdistRoot(node *bstTree, int level)
 	else
 		return rightVal;
 
-
 }
 int  bst::nodedistRoot(node *bstTree, int level, int finditem)
 {	
@@ -755,11 +773,12 @@ int  bst::nodedistRoot(node *bstTree, int level, int finditem)
 	if (bstTree->data == finditem)
 		return level;
 
-	depth = nodedistRoot(bstTree->left, level + 1, finditem);
-	if (depth > 0)
-		return depth;
+	 depth= nodedistRoot(bstTree->left, level + 1, finditem);
+	 if (depth > 0)
+		 return depth;
 	return nodedistRoot(bstTree->right, level + 1, finditem);
-	*/	
+	*/
+	
 }
 
 void bst::bstToDLL (node *bstTree)
@@ -943,13 +962,53 @@ void  bst::hasPathSum(node *bstTree,int val,int sumVal)
 
 
 }
+void bst::inorderSuccessor(int *flag,node *root, int num,node *prev)
+{//this code will give the nearest successor. So you want to find the nearest successor for a max node, this code will give the nearest successor
+	int val = *flag;
+
+	if (root == NULL)
+		return;
+	inorderSuccessor(&*flag, root->left,num,prev);
+	if (root->data == num)
+	{
+		val = 1;
+		cout << "fff" << root->data<<"----" << *flag<<"---" << &flag<<"---"<<&*flag<<" ----"<<prev->data << endl;
+
+	}
+	else if (val == 0)
+	{
+		prev = root;
+		cout << root->data << endl;
+			
+	}
+	inorderSuccessor(&*flag, root->right, num,prev);
+	
+}
+void bst::ceilNode(node *root, int num,int foundVal)
+{	//node with maximum value will not have successor or a node closest to it which is smaller than it.
+	if (root != NULL)
+	{
+		if (num >= root->data)
+			ceilNode(root->right, num, foundVal);
+		else
+			ceilNode(root->left, num, root->data);
+
+	}
+	else if (foundVal > 0)
+		cout << "Ceil " << foundVal<<endl;
+	else
+		cout << " No Ceil " << foundVal << endl;
+
+
+
+}
 void  bst::bstSuccessor(node *bstTree, int findVal)
-{
+{//node with maximum value will not have successor
 
 	if (bstTree == NULL)
 		return;
-	node *foundNode = bst::find(bstTree, findVal);// find the node associate with findVal. Function find() is called.
-
+	node *foundNode = bst::find(bstTree, findVal);// find the node associate with findVal. Function find() is called. O(h), where h is height=log2N where n is #of nodes.
+	
 	node *minNodeVal = new node;
 
 	if (foundNode->right != NULL)//Once the node is found traverse to the right of the node to get the next highest element close to it.
@@ -960,21 +1019,23 @@ void  bst::bstSuccessor(node *bstTree, int findVal)
 	}
 
 	node *successor = NULL;
-	while (bstTree != NULL)
+	node * ancestor = bstTree;
+	while (ancestor != foundNode)
 	{
-		if (foundNode->data < bstTree->data)
+		if (foundNode->data <= ancestor->data)
 		{
-			successor = bstTree;
-			bstTree = bstTree->left;
+			successor = ancestor;
+			ancestor = ancestor->left;
 		}
-		else if (foundNode->data> bstTree->data)
-		{			
-			bstTree = bstTree->right;
+		else 
+		{
+			ancestor = ancestor->right;
 		}
-		else
-			break;
+	
 	}
+	if (successor!=NULL)
 	cout<<"successor is "<< successor->data<<endl;
+	
 }
 node *  bst::minNode(node *bstTree)
 {
@@ -1003,33 +1064,3 @@ int  bst::countBST(int number)
 		return sum;
 	}
 }
-
-/*static int topLevel=-1;//so that the value can be accessed even if you exist a function
-if(flag)
-topLevel=-1;
-if(bstTree->left== NULL && bstTree->right==NULL)
-{
-if(topLevel==-1)
-{
-topLevel=currlevel;
-return true;
-}
-if(topLevel==currlevel)
-return true;
-else
-return false;
-
-}
-
-bool leftResult=true;
-bool rightResult=true;
-
-if(bstTree->left)
-leftResult=checkLeafLevel(bstTree->left,currlevel+1,false);
-if(bstTree->right)
-rightResult=checkLeafLevel(bstTree->right,currlevel+1,false);
-
-if(!leftResult || !rightResult)
-return false;
-
-return true;*/
