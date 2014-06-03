@@ -24,6 +24,8 @@
 23. Find the next minmum node in a tree from the given node
 24. Check if bst is height balanced
 25. Count Number of Binary Search Tress given N Distinct Elements
+26. Size of Binary Search Tree
+
 */
 #include<iostream>
 #include<queue>
@@ -80,6 +82,7 @@ public:
 	void ceilNode(node *root, int num,int foundVal);
 	int isBalanced(node *root, int *height);
 	int countBST(int number);
+	int sizeBST(node *root);
 	bst()
 	{
 		root = NULL;
@@ -120,8 +123,9 @@ int main()
 		cout << "23. Find a minimum node to a given node" << endl;
 		cout << "24. Check if BST is height balanced" << endl;
 		cout << "25. Count # of BST for given N Distinct Elements" << endl;
+		cout << "26. Size of Binary Search Tree" << endl;
 
-		cout << "26. Quit" << endl;
+		cout << "27. Quit" << endl;
 
 		cin >> option;
 		switch (option)
@@ -284,8 +288,14 @@ int main()
 			
 			cout << "Number of BST's : " << countNo << endl;
 			break;
+		case 26:
+			int size;
+			size = bstPtr.sizeBST(bstPtr.root);
+
+			cout << "Size of BST's : " << size << endl;
+			break;
 		
-		case 26:     exit(1);
+		case 27:     exit(1);
 
 		}
 	}
@@ -808,7 +818,17 @@ int  bst::nodedistRoot(node *bstTree, int level, int finditem)
 	*/
 	
 }
-
+int   bst::sizeBST(node *bstTree)//size of BST= #of nodes in BST
+{
+	if (bstTree == NULL)
+		return 0;
+	else
+	{
+		int leftSize=sizeBST(bstTree->left);
+		int rightSize = sizeBST(bstTree->right);
+		return leftSize + rightSize + 1;
+	}
+}
 void bst::bstToDLL (node *bstTree)
 {
 	if (bstTree == NULL)
