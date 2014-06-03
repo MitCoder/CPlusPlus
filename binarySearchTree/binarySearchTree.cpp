@@ -481,6 +481,7 @@ void bst::deleteNode(int item)
 	if (root == NULL)
 	{
 		cout << "Tree is empty" << endl;
+		return;
 	}
 
 	node *parent;
@@ -488,14 +489,22 @@ void bst::deleteNode(int item)
 	findDelNode(item, &parent, &location);
 	//cout << "delete" << parent->data << "location" << location->data << endl;
 
-	if (location->left == NULL && location->right == NULL)
-		case_a(location, parent);
-	else if (location->right != NULL && location->left == NULL)
-		case_b(location, parent);
-	else if (location->left != NULL && location->right == NULL)
-		case_b(location, parent);
+	if (location != NULL)
+	{
+
+		if (location->left == NULL && location->right == NULL)
+			case_a(location, parent);
+		else if (location->right != NULL && location->left == NULL)
+			case_b(location, parent);
+		else if (location->left != NULL && location->right == NULL)
+			case_b(location, parent);
+		else
+			case_c(location, parent);
+	}
 	else
-		case_c(location, parent);
+	{
+		cout << "Item to be deleted was not found" << endl;
+	}
 
 }
 
@@ -503,6 +512,7 @@ void bst::findDelNode(int item, node **parent, node **location)
 {
 	node *ptr=NULL;
 	node *ptrSave;
+	*location = NULL;
 	if (root == NULL)
 	{
 		parent = NULL;
@@ -536,17 +546,13 @@ void bst::findDelNode(int item, node **parent, node **location)
 		{
 			ptr = ptr->right;
 		}
-		else if (item < ptr->data)
+		else 
 		{
 			ptr = ptr->left;
 		}
-		else
-		{
-			*location = NULL;
-		}
 	}
 	
-	*parent = ptrSave;
+	//*parent = ptrSave;
 }
 void bst::case_a(node *location, node *parent)
 {
