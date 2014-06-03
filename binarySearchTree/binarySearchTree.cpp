@@ -196,8 +196,8 @@ int main()
 				cout << "Enter the data to find the distance from root" << endl;
 				int find;
 				cin >> find;
-				val = bstPtr.nodedistRoot(bstPtr.root, 1, find);
-				if (val <= 0)
+				val = bstPtr.nodedistRoot(bstPtr.root, 0, find);
+				if (val < 0)
 					cout << "Item not found" << endl;
 				else
 				cout << "Distance of " << find << " to root: " << val << endl;
@@ -514,7 +514,7 @@ void bst::findDelNode(int item, node **parent, node **location)
 	node *ptrSave;
 	*location = NULL;
 	
-	if (item == root->data)
+	if (item == root->data)//item to be deleted is root
 	{
 		*location = root;
 		*parent = NULL;
@@ -725,8 +725,9 @@ bool bst::checkLeafLevel(node *bstTree, int currlevel)
 
 }
 
-int  bst::maxdistRoot(node *bstTree, int level)
-{
+int  bst::maxdistRoot(node *bstTree, int level)//this is equal to finding the depth of a node from the root.
+{//height of tree:Max # of edges from the root to the leaf.If the tree has only root node, then it is the leaf node as well. Hencce, height is 0. max(leftHt,rightHt)+1.
+ //depth of leaf node: Max #of edges from the root to the leaf.If the tree has only root node, then it is the leaf node as well.Hencce, depth is 0.
 
 	int leftVal = 0;
 	int rightVal = 0;
@@ -791,7 +792,7 @@ int  bst::nodedistRoot(node *bstTree, int level, int finditem)
 			return leafLevel;
 		}
 		else
-			return 0;
+			return -1;
 	}
 	
 	// recursion
@@ -877,7 +878,7 @@ void  bst::bstToDLLQueue(node *bstTree)
 			q.push(temp->left);
 		if (temp->right)
 			q.push(temp->right);
-		temp->left = last;
+		temp->left = last;//left is equivalent to next pointer in DLL
 		temp->right = q.front();
 		last = temp;
 	}
@@ -900,10 +901,14 @@ void  bst::mirror(node *bstTree)
 	}	
 	
 }
-int  bst::heightBST(node *bstTree)
+int  bst::heightBST(node *bstTree)//height of a tree is number of max edges from root to the leaf nodes
 {
-	if (bstTree==NULL)
-		return 0;
+//height of tree:Max # of edges from the root to the leaf.If the tree has only root node, then it is the leaf node as well. Hencce, height is 0. max(leftHt,rightHt)+1.
+//If height is calculated based on node count, then height is 1 for the tree with only root node.
+//depth of leaf node: Max #of edges from the root to the leaf.If the tree has only root node, then it is the leaf node as well.Hencce, depth is 0.
+
+  if (bstTree==NULL)
+		return -1;
 	else
 	{
 		int lheight=heightBST(bstTree->left);
@@ -913,6 +918,8 @@ int  bst::heightBST(node *bstTree)
 			return lheight + 1;
 		else
 		return rheight + 1;
+		
+		//return max(lheight, rheight) + 1;
 		//return (lheight > rheight) ? (lheight+1) : (rheight+1);
 
 	}
