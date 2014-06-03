@@ -486,7 +486,7 @@ void bst::deleteNode(int item)
 	node *parent;
 	node *location;
 	findDelNode(item, &parent, &location);
-	cout << "delete" << parent->data << "location" << location->data << endl;
+	//cout << "delete" << parent->data << "location" << location->data << endl;
 
 	if (location->left == NULL && location->right == NULL)
 		case_a(location, parent);
@@ -501,7 +501,7 @@ void bst::deleteNode(int item)
 
 void bst::findDelNode(int item, node **parent, node **location)
 {
-	node *ptr;
+	node *ptr=NULL;
 	node *ptrSave;
 	if (root == NULL)
 	{
@@ -512,6 +512,7 @@ void bst::findDelNode(int item, node **parent, node **location)
 	{
 		*location = root;
 		*parent = NULL;
+		return;
 	}
 	if (item > root->data)
 	{
@@ -535,65 +536,89 @@ void bst::findDelNode(int item, node **parent, node **location)
 		{
 			ptr = ptr->right;
 		}
-		else
+		else if (item < ptr->data)
 		{
 			ptr = ptr->left;
 		}
+		else
+		{
+			*location = NULL;
+		}
 	}
-	*location = NULL;
+	
 	*parent = ptrSave;
 }
 void bst::case_a(node *location, node *parent)
 {
 	cout << "casea" << location->data << endl;
-	if (location == parent->left)
+	if (parent != NULL)
 	{
-		parent->left = NULL;
+
+		if (location == parent->left)
+		{
+			parent->left = NULL;
+		}
+		else
+			parent->right = NULL;
 	}
 	else
-		parent->right = NULL;
+	{
+		root = NULL;
+	}
 }
 void bst::case_b(node *location, node *parent)
 {
 	node *child;
-	cout << "caseb" << location->data << parent->data << endl;
+//	cout << "caseb" << location->data << parent->data << endl;
 	if (location->left != NULL)
 		child = location->left;
 	else
 		child = location->right;
+	if (parent != NULL)
+	{
 
-	if (parent->left == location)
-		parent->left = child;
+		if (parent->left == location)
+			parent->left = child;
+		else
+			parent->right = child;
+	}
 	else
-		parent->right = child;
+	{
+		root = child;
+	}
 }
 void bst::case_c(node *location, node *parent)
 {
-	cout << "casec" << location->data << parent->data << endl;
+	//cout << "casec" << location->data << parent->data << endl;
 	node *ptr;
 	node *ptrParent=NULL;
-	node *ptrMin, *ptrParentSave;
-	ptr = location->right;
+	node *ptrMin;
 
+	ptr = location->right;
 	while (ptr->left != NULL)
 	{
 		ptrParent = ptr;
 		ptr = ptr->left;
 	}
 	ptrMin = ptr;
-	ptrParentSave = ptrParent;
+	
+
 	//Swap the node to be deleted with the smallest node from the right subtree
 	int temp;
 	temp = location->data;
 	location->data = ptrMin->data;
 	ptrMin->data = temp;
 
-	if (ptrMin->left == NULL && ptrMin->right == NULL)
-		case_a(ptrMin, ptrParentSave);//Pass the node to be deleted and its parent
-	else
-		case_b(ptrMin, ptrParentSave);
+	if (ptrParent == NULL)
+		
+		ptrParent = location;
 
-	cout << "casec" << location->data << ptrMin->data << ptrParentSave->data << endl;
+	if (ptrMin->left == NULL && ptrMin->right == NULL)
+		case_a(ptrMin, ptrParent);//Pass the node to be deleted and its parent
+	else
+		case_b(ptrMin, ptrParent);
+
+//	cout << "casec" << location->data << ptrMin->data << ptrParentSave->data << endl;
 }
 
 //Depth first search includes preOrder, inOrder and postOrder traversal
@@ -960,7 +985,6 @@ void  bst::hasPathSum(node *bstTree,int val,int sumVal)
 	hasPathSum(bstTree->left, val, sumVal);
 	hasPathSum(bstTree->right, val, sumVal);
 
-
 }
 void bst::inorderSuccessor(int *flag,node *root, int num,node *prev)
 {//this code will give the nearest successor. So you want to find the nearest successor for a max node, this code will give the nearest successor
@@ -975,7 +999,7 @@ void bst::inorderSuccessor(int *flag,node *root, int num,node *prev)
 		cout << "fff" << root->data<<"----" << *flag<<"---" << &flag<<"---"<<&*flag<<" ----"<<prev->data << endl;
 
 	}
-	else if (val == 0)
+	else if (val == 0) //if val is 0, 0 is false
 	{
 		prev = root;
 		cout << root->data << endl;
@@ -998,8 +1022,6 @@ void bst::ceilNode(node *root, int num,int foundVal)
 		cout << "Ceil " << foundVal<<endl;
 	else
 		cout << " No Ceil " << foundVal << endl;
-
-
 
 }
 void  bst::bstSuccessor(node *bstTree, int findVal)
