@@ -513,11 +513,7 @@ void bst::findDelNode(int item, node **parent, node **location)
 	node *ptr=NULL;
 	node *ptrSave;
 	*location = NULL;
-	if (root == NULL)
-	{
-		parent = NULL;
-		location = NULL;
-	}
+	
 	if (item == root->data)
 	{
 		*location = root;
