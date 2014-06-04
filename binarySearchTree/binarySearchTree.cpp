@@ -25,6 +25,7 @@
 24. Check if bst is height balanced
 25. Count Number of Binary Search Tress given N Distinct Elements
 26. Size of Binary Search Tree
+27. Predecessor for a given number
 
 */
 #include<iostream>
@@ -80,6 +81,7 @@ public:
 	void bstSuccessor(node *root, int findSuccVal);
 	void inorderSuccessor(int *flag, struct node *root, int key, node *parent);
 	void ceilNode(node *root, int num,int foundVal);
+	void predecessorNode(node *root, int num, int foundVal);
 	int isBalanced(node *root, int *height);
 	int countBST(int number);
 	int sizeBST(node *root);
@@ -120,12 +122,13 @@ int main()
 		cout << "20. Find a path whose sum is equal is a number" << endl;
 		cout << "21. Find successor in BST" << endl;
 	    cout << "22. Find the nearest ceiling for a given number" << endl;
-		cout << "23. Find a minimum node to a given node" << endl;
-		cout << "24. Check if BST is height balanced" << endl;
-		cout << "25. Count # of BST for given N Distinct Elements" << endl;
-		cout << "26. Size of Binary Search Tree" << endl;
+		cout << "23. Find the predecessor for a given number" << endl;
+		cout << "24. Find a minimum node to a given node" << endl;
+		cout << "25. Check if BST is height balanced" << endl;
+		cout << "26. Count # of BST for given N Distinct Elements" << endl;
+		cout << "27. Size of Binary Search Tree" << endl;
 
-		cout << "27. Quit" << endl;
+		cout << "28. Quit" << endl;
 
 		cin >> option;
 		switch (option)
@@ -260,6 +263,16 @@ int main()
 					break; 
 		       }
 		case 23:
+				{
+				   int PredNum;
+				   int foundVal = 0;
+				   cout << "Enter the predecessor for a number" << endl;
+				   cin >> PredNum;
+
+				   bstPtr.predecessorNode(bstPtr.root, PredNum, foundVal);
+				   break;
+				}
+		case 24:
 				{int minNodeVal;
 				node *foundNode;
 				cout << "Enter the node to find its next minimum node" << endl;
@@ -270,7 +283,7 @@ int main()
 				cout << "Next minimum node is : " << foundNode->data << endl;
 				break;
 				}
-		case 24:
+		case 25:
 			cout << "Check if BST is height balanced" << endl;
 			int heightBalanced,result;
 			heightBalanced = 0;
@@ -280,7 +293,7 @@ int main()
 			else
 				cout << "not balanced" <<result<< endl;
 			break;
-		case 25:
+		case 26:
 			int number, countNo;
 			cout << "Enter number to count # of BST" << endl;
 			cin >> number;
@@ -288,14 +301,14 @@ int main()
 			
 			cout << "Number of BST's : " << countNo << endl;
 			break;
-		case 26:
+		case 27:
 			int size;
 			size = bstPtr.sizeBST(bstPtr.root);
 
 			cout << "Size of BST's : " << size << endl;
 			break;
 		
-		case 27:     exit(1);
+		case 28:     exit(1);
 
 		}
 	}
@@ -1055,12 +1068,28 @@ void bst::ceilNode(node *root, int num,int foundVal)
 		cout << " No Ceil " << foundVal << endl;
 
 }
+void bst::predecessorNode(node *root, int num, int foundVal)
+{	//node with maximum value will not have successor or a node closest to it which is smaller than it.
+	if (root != NULL)
+	{
+		if (num <= root->data)
+			predecessorNode(root->left, num, foundVal);
+		else
+			predecessorNode(root->right, num, root->data);
+
+	}
+	else if (foundVal > 0)
+		cout << "predecessor " << foundVal << endl;
+	else
+		cout << " No predecessor " << foundVal << endl;
+
+}
 void  bst::bstSuccessor(node *bstTree, int findVal)
 {//node with maximum value will not have successor
 
 	if (bstTree == NULL)
 		return;
-	node *foundNode = bst::find(bstTree, findVal);// find the node associate with findVal. Function find() is called. O(h), where h is height. height is log2N where n is #of nodes, only in case of balanced tree.
+	node *foundNode = bst::find(bstTree, findVal);// find the node associate with findVal. Function find() is called. O(h), where h is height. height is log2N where n is #of nodes.
 	
 	node *minNodeVal = new node;
 
