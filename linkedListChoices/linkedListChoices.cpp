@@ -169,6 +169,7 @@ void linkedListClass::retrieve()
 		cout << retrievePtr->data << endl;
 	}
 }
+//O(N).Even if there are 100 elements, middle element is at 50 location. Constants dont matter in Big O.So we have O(N) = O(N/2).
 void linkedListClass::middleLinkedList(linkedListStruct* list)
 {
 	linkedListStruct *fast = list;
@@ -226,25 +227,7 @@ void linkedListClass::insertSort()
 	}
 	//	cout<<Head->data;
 }
-//mergesort time complexity worst case is O(nlogn).Space complexity is O(n)ie space is proportional to no. of elements.Partitioning is logN and merging the partitions is O(N)
-/*
-[3,2,1,4,8,5]=N/1
-/        \
-/          \
-/            \
-[3,2,1]=N/2^1     [4,8,5]=N/2^1
-/    \            /  \
-/     \          /    \
-[3,2]  1 =N/2^2       [4,8] 5=N/2^2
-/   \    \             /  \  \
-/    \     \          /   \   \
-3 =1 2 =1  1 =1      4=1    8=1 5=1
-1=N/2^(l-1);
-2^(l-1)=N;
-l-1=LogN;
-l=logN+1;
-1~logN;
-*/
+//mergesort time complexity worst case is O(nlogn).Space complexity is O(n)ie space is proportional to no. of elements.
 linkedListStruct* linkedListClass::mergeSort(linkedListStruct* start, int size)
 {
 	int mid;
