@@ -11,7 +11,6 @@ class binarySearch
 {
 public:
 	void addNode(int item);
-	void printList();
 	void retrieveList(node* list);
 	int count(node* list);
 	int search(int len, int itemFind);
@@ -45,19 +44,7 @@ void binarySearch::addNode(int item)
 		head = newNode;
 	}
 }
-void binarySearch::printList()
-{
-	node *ptr = new node;
-	ptr = head;
 
-	cout << "Printing list " << endl;//321 is changed to 123..head points to 1
-	while (ptr != NULL)
-	{
-		cout << ptr->data << endl;
-		ptr = ptr->next;
-	}
-
-}
 void binarySearch::retrieveList(node* list)
 {
 	cout << "Printing list " << endl;//321 is changed to 123..head points to 1
@@ -172,7 +159,7 @@ int main()
 		cin >> items;
 		classPtr->addNode(items);
 	}
-	//classPtr->printList();
+
 	int count = classPtr->count(classPtr->head);
 	node *sortList = classPtr->mergeSort(classPtr->head, count);
 	temp = sortList;
