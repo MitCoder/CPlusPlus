@@ -738,7 +738,7 @@ bool bst::checkLeafLevel(node *bstTree, int currlevel)
 int  bst::maxdistRoot(node *bstTree, int level)//this is equal to finding the depth of a node from the root.
 {//height of tree:Max # of edges from the root to the leaf.If the tree has only root node, then it is the leaf node as well. Hencce, height is 0. max(leftHt,rightHt)+1.
  //depth of leaf node: Max #of edges from the root to the leaf.If the tree has only root node, then it is the leaf node as well.Hencce, depth is 0.
-
+	
 	int leftVal = 0;
 	int rightVal = 0;
 	static int leafLevel = 0;
@@ -776,7 +776,8 @@ int  bst::maxdistRoot(node *bstTree, int level)//this is equal to finding the de
 		return leftVal;
 	else
 		return rightVal;
-
+		
+	
 }
 int  bst::nodedistRoot(node *bstTree, int level, int finditem)
 {	
@@ -824,10 +825,11 @@ int   bst::sizeBST(node *bstTree)//size of BST= #of nodes in BST
 		return 0;
 	else
 	{
-		int leftSize=sizeBST(bstTree->left);
+		int leftSize = sizeBST(bstTree->left);
 		int rightSize = sizeBST(bstTree->right);
 		return leftSize + rightSize + 1;
 	}
+
 }
 void bst::bstToDLL (node *bstTree)
 {
@@ -1058,7 +1060,7 @@ void  bst::bstSuccessor(node *bstTree, int findVal)
 
 	if (bstTree == NULL)
 		return;
-	node *foundNode = bst::find(bstTree, findVal);// find the node associate with findVal. Function find() is called. O(h), where h is height=log2N where n is #of nodes.
+	node *foundNode = bst::find(bstTree, findVal);// find the node associate with findVal. Function find() is called. O(h), where h is height. height is log2N where n is #of nodes, only in case of balanced tree.
 	
 	node *minNodeVal = new node;
 
