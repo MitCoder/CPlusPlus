@@ -1,16 +1,16 @@
 /*Binary search tree
-1. Insert elements in a tree
-2. Find a specific element in tree
-3. Display all elements of tree
-4. Delete an element in tree
-5. PreOrder Traveral
-6. InOrder Traveral
-7. PostOrder Traveral
-8. LCA of BST
-9. Display levelwise BST
+1.  Insert elements in a tree
+2.  Find a specific element in tree
+3.  Display all elements of tree
+4.  Delete an element in tree
+5.  PreOrder Traveral
+6.  InOrder Traveral
+7.  PostOrder Traveral
+8.  LCA of BST
+9.  Display levelwise BST
 10. Check level of leaf nodes
-11. Max distance from root
-12. Find distance of node from root
+11. Max distance from root ie depth
+12. Find distance of node from root ie depth
 13. Print all possible paths
 14. Convert BST to Doubly linked list
 15. Convert BST to Doubly linked list using queue
@@ -21,11 +21,11 @@
 20. Find a path whose sum is equal is a number
 21. Find the successor of a given node
 22. Find the nearest ceiling for a given number
-23. Find the next minmum node in a tree from the given node
-24. Check if bst is height balanced
-25. Count Number of Binary Search Tress given N Distinct Elements
-26. Size of Binary Search Tree
-27. Predecessor for a given number
+23. Predecessor for a given number
+24. Find the next minmum node in a tree from the given node
+25. Check if bst is height balanced
+26. Count Number of Binary Search Tress given N Distinct Elements
+27. Size of Binary Search Tree
 
 */
 #include<iostream>
@@ -1069,7 +1069,7 @@ void bst::ceilNode(node *root, int num,int foundVal)
 
 }
 void bst::predecessorNode(node *root, int num, int foundVal)
-{	//node with maximum value will not have successor or a node closest to it which is smaller than it.
+{	//finds the next predecessor ie closest smaller node than the given node
 	if (root != NULL)
 	{
 		if (num <= root->data)
