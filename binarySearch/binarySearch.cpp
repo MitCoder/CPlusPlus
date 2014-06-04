@@ -1,4 +1,4 @@
-//binary search is done in for elements which are sorted in order in  O(logn)
+//binary search is done in for elements which are sorted in order in.Searching takes  O(logn) whereas inserting takes O(n)
 #include<iostream>
 using namespace std;
 
@@ -12,7 +12,12 @@ class binarySearch
 public:
 	void addNode(int item);
 	void printList();
+	void retrieveList(node* list);
+	int count(node* list);
 	int search(int len, int itemFind);
+	node* mergeSort(node* start, int size);
+	node *merge(node *first, node *second, int size1, int size2);
+	
 	binarySearch();
 	node *head;
 	node *tail;
@@ -21,7 +26,6 @@ binarySearch::binarySearch()
 {
 	binarySearch::head = NULL;
 	binarySearch::tail = NULL;
-
 }
 
 void binarySearch::addNode(int item)
@@ -54,17 +58,84 @@ void binarySearch::printList()
 	}
 
 }
+void binarySearch::retrieveList(node* list)
+{
+	cout << "Printing list " << endl;//321 is changed to 123..head points to 1
+	while (list != NULL)
+	{
+		cout << list->data << endl;
+		list = list->next;
+	}
+
+}
+int binarySearch::count(node* list)
+{
+	node *cntPtr = new node;
+	int count = 0;
+	for (cntPtr = list; cntPtr != NULL; cntPtr = cntPtr->next)
+	{
+		count++;
+	}
+	return count;
+}
+//mergesort time complexity worst case is O(nlogn).Space complexity is O(n)ie space is proportional to no. of elements.
+node* binarySearch::mergeSort(node* start, int size)
+{
+	int mid;
+	node* first = new node;
+	node* second = new node;
+
+	if (size>1)
+	{
+		mid = size / 2;
+		int count = mid;
+		node *middle = new node;
+		middle = start;
+		while (count)
+		{
+			middle = middle->next;
+			count--;
+		}
+		first = mergeSort(start, mid);
+		second = mergeSort(middle, size - mid);
+		return merge(first, second, mid, size - mid);
+
+	}
+	else
+		return start;
+}
+node* binarySearch::merge(node *first, node *second, int size1, int size2)
+{
+	node *result = new node;
+	result = NULL;
+	if (size1 == 0)
+		return second;
+	if (size2 == 0)
+		return first;
+	if (first->data < second->data || first->data == second->data)
+	{
+		result = first;
+		first->next = merge(first->next, second, size1 - 1, size2);
+		return first;
+	}
+	else
+	{
+		result = second;
+		second->next = merge(first, second->next, size1, size2 - 1);
+		return second;
+	}
+	
+}
 int binarySearch::search(int count, int findItem)
 {
 	node *midPtr = new node;
-	//	node *midPtr=new node;
 	int mid, low, high;
 	high = count - 1;
 	low = 0;
 	while (low <= high)
 	{
 		mid = (low + high) / 2;
-		midPtr = head;
+		midPtr = binarySearch::head;
 
 		for (int i = 0; i<mid; i++)
 		{
@@ -92,6 +163,7 @@ int main()
 {
 	binarySearch *classPtr = new binarySearch();
 	int items, len, eleSearch;
+	node *temp;
 	cout << "Enter how many items to be added in linked list" << endl;
 	cin >> len;
 	cout << "Add elements in sorted manner in linked list" << endl;
@@ -100,7 +172,22 @@ int main()
 		cin >> items;
 		classPtr->addNode(items);
 	}
-	classPtr->printList();
+	//classPtr->printList();
+	int count = classPtr->count(classPtr->head);
+	node *sortList = classPtr->mergeSort(classPtr->head, count);
+	temp = sortList;
+	classPtr->head = sortList;
+	int Cnt = 0;
+	while (Cnt != count - 1)
+	{
+		cout << temp->data << endl;
+		temp = temp->next;
+		Cnt++;
+	}
+	temp->next = NULL;
+	cout << "afsdfsfadsf" << classPtr->head->data<<endl;
+	classPtr->retrieveList(sortList);
+
 	cout << "Enter element to search" << endl;
 	cin >> eleSearch;
 	int findItem = classPtr->search(len, eleSearch);
