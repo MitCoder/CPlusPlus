@@ -1,4 +1,4 @@
-//binary search is done in for elements which are sorted in order in.Searching takes  O(logn) whereas inserting takes O(n)
+//binary search is done in for elements which are sorted in order in.Searching takes  O(logn) whereas inserting takes O(1)
 #include<iostream>
 using namespace std;
 
@@ -132,16 +132,15 @@ int binarySearch::search(int count, int findItem)
 		if (midPtr->data == findItem)
 		{
 			return midPtr->data;
-
 		}
 
 		if (findItem < midPtr->data)
 		{
-			low = mid + 1;
+			high = mid - 1;
 		}
 		else
 		{
-			high = mid - 1;
+			low = mid+1;
 		}
 	}
 
