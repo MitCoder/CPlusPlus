@@ -289,8 +289,8 @@ int main()
 			cout << "Check if BST is height balanced" << endl;
 			int heightBalanced,result;
 			heightBalanced = 1;
-			//result=bstPtr.isBalanced(bstPtr.root, &heightBalanced);
-			result = bstPtr.isBalancedHt(bstPtr.root);
+			//result=bstPtr.isBalanced(bstPtr.root, &heightBalanced);//option1 working
+			result = bstPtr.isBalancedHt(bstPtr.root);//option2 working
 			if (result>-1)//ie if true or if (1)
 				cout << "balanced" <<result<< endl;
 			else
@@ -978,7 +978,7 @@ int  bst::diameter(node *bstTree)
 		return max(lheight + rheight + 1, ldiameter + rdiameter);
 	}
 }
-int  bst::isBalanced(node *bstTree, int *height)
+int  bst::isBalanced(node *bstTree, int *height)//option1 working
 {//O(n),since height is calculated during the same time as the code determines if Left Subtree is balanced and Right Subtree is balanced 
 	if (bstTree == NULL)
 	{
@@ -1015,7 +1015,7 @@ int  bst::isBalancedHt(node *bstTree)
 	if (leftHt == -1 || rightHt == -1)
 		return -1;
 
-	if (abs(leftHt - rightHt) >= 2)
+	if (abs(leftHt - rightHt) >1)
 		return -1;//not balanced ie false
 	else
 	return max(leftHt, rightHt) + 1;	
