@@ -83,6 +83,8 @@ public:
 	void ceilNode(node *root, int num,int foundVal);
 	void predecessorNode(node *root, int num, int foundVal);
 	int isBalanced(node *root, int *height);
+	int  isBalancedHt(node *bstTree);
+
 	int countBST(int number);
 	int sizeBST(node *root);
 	bst()
@@ -286,9 +288,10 @@ int main()
 		case 25:
 			cout << "Check if BST is height balanced" << endl;
 			int heightBalanced,result;
-			heightBalanced = 0;
-			result=bstPtr.isBalanced(bstPtr.root, &heightBalanced);
-			if (result)//ie if true or if (1)
+			heightBalanced = 1;
+			//result=bstPtr.isBalanced(bstPtr.root, &heightBalanced);
+			result = bstPtr.isBalancedHt(bstPtr.root);
+			if (result>-1)//ie if true or if (1)
 				cout << "balanced" <<result<< endl;
 			else
 				cout << "not balanced" <<result<< endl;
@@ -514,7 +517,6 @@ void bst::deleteNode(int item)
 
 	if (location != NULL)
 	{
-
 		if (location->left == NULL && location->right == NULL)
 			case_a(location, parent);
 		else if (location->right != NULL && location->left == NULL)
@@ -938,7 +940,7 @@ void  bst::mirror(node *bstTree)
 }
 int  bst::heightBST(node *bstTree)//height of a tree is number of max edges from root to the leaf nodes
 {
-//height of tree:Max # of edges from the root to the leaf.If the tree has only root node, then it is the leaf node as well. Hencce, height is 0. max(leftHt,rightHt)+1.
+//height of tree:Max # of edges from the root to the leaf.If the tree has only root node, then it is the leaf node as well. Hence, height is 0. max(leftHt,rightHt)+1.
 //If height is calculated based on node count, then height is 1 for the tree with only root node.
 //depth of leaf node: Max #of edges from the root to the leaf.If the tree has only root node, then it is the leaf node as well.Hencce, depth is 0.
 
@@ -977,11 +979,11 @@ int  bst::diameter(node *bstTree)
 	}
 }
 int  bst::isBalanced(node *bstTree, int *height)
-{
+{//O(n),since height is calculated during the same time as the code determines if Left Subtree is balanced and Right Subtree is balanced 
 	if (bstTree == NULL)
 	{
 		*height = 0;
-		return 1;
+		return -1;
 	}
 	/* lh --> Height of left subtree
 	rh --> Height of right subtree 
@@ -998,6 +1000,25 @@ int  bst::isBalanced(node *bstTree, int *height)
 		return 0;//not balanced ie false
 	else
 		return leftHt&&rightHt;//balanced
+
+}
+int  bst::isBalancedHt(node *bstTree)
+{
+	if (bstTree == NULL)
+	{
+		return 0;
+	}
+
+	int leftHt = isBalancedHt(bstTree->left);
+	int rightHt = isBalancedHt(bstTree->right);
+	
+	if (leftHt == -1 || rightHt == -1)
+		return -1;
+
+	if (abs(leftHt - rightHt) >= 2)
+		return -1;//not balanced ie false
+	else
+	return max(leftHt, rightHt) + 1;	
 
 }
 void  bst::deleteAllBST(node *bstTree)
@@ -1089,7 +1110,7 @@ void  bst::bstSuccessor(node *bstTree, int findVal)
 
 	if (bstTree == NULL)
 		return;
-	node *foundNode = bst::find(bstTree, findVal);// find the node associate with findVal. Function find() is called. O(h), where h is height. height is log2N where n is #of nodes.
+	node *foundNode = bst::find(bstTree, findVal);// find the node associate with findVal. Function find() is called. O(h), where h is height. If it is a balanced tree height is log2N, where n is #of nodes.
 	
 	node *minNodeVal = new node;
 
