@@ -42,6 +42,7 @@ public:
 	linkedListStruct* reversePalindromeList(linkedListStruct* secondHalfList);
 	linkedListStruct* mergeSort(linkedListStruct* start, int size);
 	linkedListStruct* merge(linkedListStruct* first, linkedListStruct* second, int size1, int size2);
+	void deleteElement(int data);
 
 	//void insertSecond(int data);
 private:
