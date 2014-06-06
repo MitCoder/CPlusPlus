@@ -125,7 +125,7 @@ int main()
 		cout << "21. Find successor in BST" << endl;
 	    cout << "22. Find the nearest ceiling for a given number" << endl;
 		cout << "23. Find the predecessor for a given number" << endl;
-		cout << "24. Find a minimum node to a given node" << endl;
+		cout << "24. Find a minimum node" << endl;
 		cout << "25. Check if BST is height balanced" << endl;
 		cout << "26. Count # of BST for given N Distinct Elements" << endl;
 		cout << "27. Size of Binary Search Tree" << endl;
@@ -446,8 +446,11 @@ node* bst::find(node *temp, int item)
 	{
 		return NULL;
 	}
-
-	if (item > temp->data)
+	if (item == temp->data)
+	{
+		return temp;
+	}
+	else if (item > temp->data)
 	{
 		ptr = temp->right;
 	}
@@ -751,7 +754,7 @@ bool bst::checkLeafLevel(node *bstTree, int currlevel)
 }
 
 int  bst::maxdistRoot(node *bstTree, int level)//this is equal to finding the depth of a node from the root.
-{//height of tree:Max # of edges from the root to the leaf.If the tree has only root node, then it is the leaf node as well. Hencce, height is 0. max(leftHt,rightHt)+1.
+{//height of tree:Max # of edges from the leaf to the root.If the tree has only root node, then it is the leaf node as well. Hencce, height is 0. max(leftHt,rightHt)+1.
  //depth of leaf node: Max #of edges from the root to the leaf.If the tree has only root node, then it is the leaf node as well.Hencce, depth is 0.
 	
 	int leftVal = 0;
