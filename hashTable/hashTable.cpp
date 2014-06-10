@@ -4,7 +4,7 @@ Hash Table
 2. Count items associated with an index in hash table
 3. print elements
 4. remove element from hash table
-Analysis: Expected lenght of chain(ie linked list) for n keys and m slots(ie size) will be n/m. O(1+n/m),
+Analysis: Expected length of chain(ie linked list) for n keys and m slots(ie size) will be n/m. O(1+n/m),
 where 1 is for doing hash fn calculation and n/m(load factor aka alpha)
 */
 
