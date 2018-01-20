@@ -7,28 +7,23 @@ circularClass::circularClass()
 }
 void circularClass::insert(int data)
 {
-	circularStruct *ptr = new circularStruct;
+	circularStruct *circular = new circularStruct;
+	circularStruct *temp = new circularStruct;
+	temp = head;
+	circular->data = data;
+	circular->next = head;
 
-	if (head == NULL)
-	{
-		ptr->data = data;
-		ptr->next = ptr;
-		head = ptr;
-	}
-	else
-	{
-		circularStruct *temp = new circularStruct;
-		ptr->data = data;
-		ptr->next = head;
-		head = ptr;
-		ptr = ptr->next;
-		while (ptr->next != head->next)
-		{
-			ptr = ptr->next;
-			cout << ptr->data << "fff" << ptr->next->data<<endl;
+	if (head != NULL) {
+		while (temp->next != head) {
+			temp = temp->next;
 		}
-		ptr->next = head;
+		temp->next = circular;
 	}
+	else {
+		circular->next = circular;
+
+	}
+	head = circular;
 }
 void circularClass::deleteNode(int delNode)
 {
