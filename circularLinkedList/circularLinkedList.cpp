@@ -76,16 +76,12 @@ void circularClass::deleteNode(int delNode)
 }
 void circularClass::retrieve()
 {
-	circularStruct *ptr = new circularStruct;
-
-	ptr = head;
-	cout << "Retrieveing" << endl;
-	while (ptr->next != head)
-	{
-		cout << ptr->data << endl;
-		ptr = ptr->next;
-	}
-	cout << ptr->data << endl;
+	circularStruct *circular = new circularStruct;
+	circular = head;
+	do {
+		cout << circular->data << endl;
+		circular = circular->next;
+	} while (circular != head);
 
 }
 int main()
