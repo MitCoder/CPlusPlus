@@ -1,8 +1,14 @@
+// LinkedTest.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+
+
 #include<iostream>
 #include "linkedlistChoices.h"
 using namespace std;
 
-linkedListClass::linkedListClass() :size(0), Head(NULL), Head2(NULL), Head3(NULL){};
+linkedListClass::linkedListClass() :size(0), Head(NULL), Head2(NULL), Head3(NULL) {};
 
 void linkedListClass::insert(int data)
 {
@@ -55,7 +61,7 @@ void linkedListClass::intersectionList()
 				result->data = first->data;
 				result->Next = Head3;
 				Head3 = result;
-				cout << "head"<<Head3->data << endl;
+				cout << "head" << Head3->data << endl;
 			}
 		}
 
@@ -64,7 +70,7 @@ void linkedListClass::intersectionList()
 	for (result1 = Head3; result1 != NULL; result1 = result1->Next)
 	{
 
-		cout <<"inster"<< result1->data<<endl;
+		cout << "inster" << result1->data << endl;
 	}
 
 }
@@ -82,7 +88,7 @@ void linkedListClass::intersectionListComp()
 	if (firstCount > secondCount)
 	{
 		differenceVal = firstCount - secondCount;
-		cout <<"difference "<< differenceVal<<endl;
+		cout << "difference " << differenceVal << endl;
 	}
 	else
 	{
@@ -98,7 +104,7 @@ void linkedListClass::intersectionListComp()
 
 	while (first != NULL && second != NULL)
 	{
-		cout << first->data<<"while" << second->data<<endl;
+		cout << first->data << "while" << second->data << endl;
 		if (first->data == second->data)
 		{
 			cout << "intersect" << first->data << endl;
@@ -149,18 +155,18 @@ void linkedListClass::insertElement(int data, int position)
 			/*newElement->Next = curr;
 			prev->Next = newElement;
 			return; //other way*/
-			
+
 			if (curr == Head)
 			{
 				newElement->Next = curr;
 				curr = newElement;
-				Head = curr;		
+				Head = curr;
 				return;
 			}
 			else
 			{
 				newElement->Next = curr;
-				prev->Next=newElement;
+				prev->Next = newElement;
 				curr = newElement;
 				return;
 			}
@@ -175,7 +181,7 @@ void linkedListClass::insertElement(int data, int position)
 
 }
 void linkedListClass::retrieveList(linkedListStruct* list)
-{ 
+{
 	while (list != NULL)
 	{
 		cout << list->data << endl;
@@ -202,19 +208,19 @@ void linkedListClass::middleLinkedList(linkedListStruct* list)
 
 	if (list != NULL)
 	{
-		while (fast->Next != NULL && fast->Next->Next!=NULL)
+		while (fast->Next != NULL && fast->Next->Next != NULL)
 		{
 			slow = fast->Next;
 			fast = fast->Next->Next;
 		}
-		cout << "Middle element is : " << slow->data<<endl;
+		cout << "Middle element is : " << slow->data << endl;
 
 	}
 
 }
 void linkedListClass::reverse(linkedListStruct* list)
 {
-	linkedListStruct *curr,*prev,*next;
+	linkedListStruct *curr, *prev, *next;
 	prev = NULL;
 	curr = list;
 	while (curr != NULL)
@@ -222,35 +228,64 @@ void linkedListClass::reverse(linkedListStruct* list)
 		next = curr->Next;
 		curr->Next = prev;
 		prev = curr;
-		curr = next;			
+		curr = next;
 	}
 	Head = prev;
 	retrieve();
 }
+/*
 void linkedListClass::insertSort()
 {
-	linkedListStruct *current = new linkedListStruct;
-	linkedListStruct *next = new linkedListStruct;
-	linkedListStruct *tail = new linkedListStruct;
+linkedListStruct *current = new linkedListStruct;
+linkedListStruct *next = new linkedListStruct;
+linkedListStruct *tail = new linkedListStruct;
 
-	tail = NULL;
-	current = Head;
-	while (current != NULL && tail != Head)
+tail = NULL;
+current = Head;
+while (current != NULL && tail != Head)
+{
+next = current;
+for (; next->Next != tail; next = next->Next)
+{
+if (next->data <= next->Next->data)
+{
+int temp = next->data;
+next->data = next->Next->data;
+next->Next->data = temp;
+}
+}
+tail = next;
+current = Head;
+}
+//	cout<<Head->data;
+}*/
+void linkedListClass::insertSort() {
+	if (Head == NULL)
 	{
-		next = current;
-		for (; next->Next != tail; next = next->Next)
-		{
-			if (next->data <= next->Next->data)
-			{
-				int temp = next->data;
-				next->data = next->Next->data;
-				next->Next->data = temp;
-			}
-		}
-		tail = next;
-		current = Head;
+		return;
 	}
-	//	cout<<Head->data;
+
+	linkedListStruct *dummy = new linkedListStruct;
+	linkedListStruct *prev = dummy;
+	prev->Next = NULL;
+
+	linkedListStruct *current = Head;
+	linkedListStruct *next = NULL;
+
+	while (current != NULL) {
+		next = current->Next;
+		while (prev->Next != NULL && prev->Next->data < current->data) {
+			prev = prev->Next;
+		}
+		current->Next = prev->Next;
+		prev->Next = current;
+		prev = dummy;
+		current = next;
+	}
+	Head = dummy->Next;
+	//return dummy->Next;
+
+
 }
 //mergesort time complexity worst case is O(nlogn).Space complexity is O(n)ie space is proportional to no. of elements.
 linkedListStruct* linkedListClass::mergeSort(linkedListStruct* start, int size)
@@ -342,7 +377,7 @@ void linkedListClass::sortList()
 					curr->Next = temp;
 					Head = curr;
 
-				/*	temp = curr->Next;//can also be done this way
+					/*	temp = curr->Next;//can also be done this way
 					curr->Next = temp->Next;
 					temp->Next = curr;
 					curr = temp;
@@ -433,14 +468,15 @@ void linkedListClass::showDuplicate()
 				cout << iPtr->data << endl;
 				n++;
 			}
-			
+
 		}
 	}
 	// cout<<"Total number of duplicate elements are : "<<n<<endl;
 }
 
 void linkedListClass::removeDuplicate()
-{	linkedListStruct *iPtr = new linkedListStruct;
+{
+	linkedListStruct *iPtr = new linkedListStruct;
 	linkedListStruct *jPtr = new linkedListStruct;
 	linkedListStruct *kPtr = new linkedListStruct;
 	linkedListStruct *oldPtr = new linkedListStruct;
@@ -463,23 +499,23 @@ void linkedListClass::removeDuplicate()
 			}
 		}
 	}
-/*	removing duplicates from sorted list Time complexity is O(n)
-//if the list is unsorted,use merge sort to sort the list O(nlogn) and then remove duplicates.Quicksort can also be used but for worst case it is O(n^2)
+	/*	removing duplicates from sorted list Time complexity is O(n)
+	//if the list is unsorted,use merge sort to sort the list O(nlogn) and then remove duplicates.Quicksort can also be used but for worst case it is O(n^2)
 
-iPtr = Head;
+	iPtr = Head;
 
-   while (iPtr->Next != NULL)
+	while (iPtr->Next != NULL)
 	{
-		if (iPtr->data == iPtr->Next->data)
-		{
-			oldPtr = iPtr->Next;
-			iPtr->Next = iPtr->Next->Next;
-			delete(oldPtr);
-		}
-		else
-		{
-			iPtr = iPtr->Next;
-		}
+	if (iPtr->data == iPtr->Next->data)
+	{
+	oldPtr = iPtr->Next;
+	iPtr->Next = iPtr->Next->Next;
+	delete(oldPtr);
+	}
+	else
+	{
+	iPtr = iPtr->Next;
+	}
 	}
 	*/
 }
@@ -509,29 +545,29 @@ void linkedListClass::shuffleMerge()
 
 	while ((list1 || list2) != NULL)
 	{ //bellow is also one way to do it,which is commented out	 			
-		/*	temp1=list1;
-		temp2=list2;
-		list1 = list1->Next;
-		list2 = list2->Next;
+	  /*	temp1=list1;
+	  temp2=list2;
+	  list1 = list1->Next;
+	  list2 = list2->Next;
 
-		if(temp1->Next == NULL)
-		{
-		temp1->Next = temp2;
-		break;
-		}
-		else if(temp2->Next==NULL)
-		{
-		temp1->Next = temp2;
-		temp2->Next = list1;
-		break;
-		}
-		else
-		{
-		temp1->Next = temp2;
-		temp2->Next = list1;
-		}
-		*/
-		
+	  if(temp1->Next == NULL)
+	  {
+	  temp1->Next = temp2;
+	  break;
+	  }
+	  else if(temp2->Next==NULL)
+	  {
+	  temp1->Next = temp2;
+	  temp2->Next = list1;
+	  break;
+	  }
+	  else
+	  {
+	  temp1->Next = temp2;
+	  temp2->Next = list1;
+	  }
+	  */
+
 		temp1 = list1->Next;
 		list1->Next = list2;
 
@@ -580,7 +616,7 @@ void linkedListClass::alternateSplit()
 
 		split2->Next = split2->Next->Next;
 		split2 = split2->Next;
-	/*	split1->Next = split2->Next;
+		/*	split1->Next = split2->Next;
 		split1 = split1->Next;
 		split2->Next = split1->Next;
 		split2 = split2->Next;*/
@@ -635,39 +671,39 @@ void linkedListClass::palindrome(linkedListStruct *list)
 	/*//below also works
 	if (list != NULL)
 	{
-		while (fast != NULL && fast->Next != NULL)//logic to find the middle of the linked list
-		{
-			fast = fast->Next->Next;
-			prevSlow = slow;
-			slow = slow->Next;
-		}
-		if (fast != NULL)//fast pointer will be null if there are even elements.This logic can also be used to find if there are even or odd elements
-		{
-			midNode = slow;
-			slow = slow->Next;
-		}
-		//middle is found, separate the LHS and RHS
-		prevSlow->Next = NULL;
-		secondHalf = slow;
-		linkedListStruct * reverseList = reversePalindromeList(secondHalf);//reverse the second half of list
-		int compareResult = linkedListClass::compareList(list, reverseList);
-		linkedListStruct * secondHalfList = reversePalindromeList(reverseList);//the reverse list is made to original list as second half
-
-		if (midNode != NULL)
-		{
-			prevSlow->Next = midNode;
-			midNode->Next = secondHalfList;
-		}
-		else
-		{
-			prevSlow->Next = secondHalfList;
-		}
-		if (compareResult)
-			cout << "List is palindrome" << endl;
-		else
-			cout << "Not a palindrome" << endl;
+	while (fast != NULL && fast->Next != NULL)//logic to find the middle of the linked list
+	{
+	fast = fast->Next->Next;
+	prevSlow = slow;
+	slow = slow->Next;
 	}
-*/
+	if (fast != NULL)//fast pointer will be null if there are even elements.This logic can also be used to find if there are even or odd elements
+	{
+	midNode = slow;
+	slow = slow->Next;
+	}
+	//middle is found, separate the LHS and RHS
+	prevSlow->Next = NULL;
+	secondHalf = slow;
+	linkedListStruct * reverseList = reversePalindromeList(secondHalf);//reverse the second half of list
+	int compareResult = linkedListClass::compareList(list, reverseList);
+	linkedListStruct * secondHalfList = reversePalindromeList(reverseList);//the reverse list is made to original list as second half
+
+	if (midNode != NULL)
+	{
+	prevSlow->Next = midNode;
+	midNode->Next = secondHalfList;
+	}
+	else
+	{
+	prevSlow->Next = secondHalfList;
+	}
+	if (compareResult)
+	cout << "List is palindrome" << endl;
+	else
+	cout << "Not a palindrome" << endl;
+	}
+	*/
 }
 int linkedListClass::compareList(linkedListStruct *firstList, linkedListStruct *reverseList)
 {
@@ -677,7 +713,7 @@ int linkedListClass::compareList(linkedListStruct *firstList, linkedListStruct *
 		if (firstList->data == reverseList->data)
 			flag = 1;
 		else
-			flag=0;
+			flag = 0;
 
 		firstList = firstList->Next;
 		reverseList = reverseList->Next;
@@ -687,9 +723,9 @@ int linkedListClass::compareList(linkedListStruct *firstList, linkedListStruct *
 	else
 		return 0;
 	/*if (firstList == NULL && reverseList == NULL)
-		return 1;
-	else 
-		return 0;*/
+	return 1;
+	else
+	return 0;*/
 }
 linkedListStruct * linkedListClass::reversePalindromeList(linkedListStruct *list)
 {
@@ -704,7 +740,7 @@ linkedListStruct * linkedListClass::reversePalindromeList(linkedListStruct *list
 		current = next;
 	}
 	list = prev;
-	
+
 	return list;
 }
 
@@ -807,7 +843,7 @@ int main()
 			listSize = classPtr->count(classPtr->Head);
 			newhead = classPtr->mergeSort(classPtr->Head, listSize);
 			temp = newhead;
-			 count = 0;
+			count = 0;
 			while (count != listSize - 1)
 			{
 				temp = temp->Next;
@@ -818,7 +854,7 @@ int main()
 			break;
 		case 18:
 			classPtr->deleteLinkedList(classPtr->Head);
-			break;	
+			break;
 		case 19:
 			classPtr->middleLinkedList(classPtr->Head);
 			break;
