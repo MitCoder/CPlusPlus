@@ -1,4 +1,6 @@
-//binary search is done in for elements which are sorted in order in.Searching takes  O(logn) whereas inserting takes O(1)
+/*Binary search is done in for elements which are sorted in order in.Searching takes  O(logn) whereas inserting takes O(1). 
+Binary search is usually for used for a sorted array and search takes 0(log n). Binary search is not recommended for linked list since linked list doesnt provide random access.
+If the count of the list is counted as items are added in the list and the list is sorted, one can probably use binary search.*/
 #include<iostream>
 using namespace std;
 
